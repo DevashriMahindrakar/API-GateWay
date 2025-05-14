@@ -2,17 +2,18 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/v1/orders",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5002
+          "Port": 5001
         }
       ],
       "UpstreamPathTemplate": "/orders",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "JwtBearer"
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
       },
       "RateLimitOptions": {
         "EnableRateLimiting": true,
@@ -22,26 +23,30 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/products",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5003
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/products",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "JwtBearer"
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
       },
       "RateLimitOptions": {
         "EnableRateLimiting": true,
         "Period": "1m",
         "Limit": 5
+      },
+      "AddHeadersToRequest": {
+        "Authorization": "Authorization" // Forward the token
       }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "https://localhost:5000"
   }
 }
