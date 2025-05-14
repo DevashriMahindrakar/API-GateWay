@@ -4,3 +4,5 @@
 
 /.vs/ApiGateway/FileContentIndex
 /obj
+/.vs/ApiGateway
+/bin/Debug/net8.0
