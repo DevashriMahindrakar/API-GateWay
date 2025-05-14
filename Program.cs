@@ -1,3 +1,4 @@
+﻿using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
@@ -29,6 +30,10 @@ builder.Services.AddAuthentication(options =>
             )
         };
     });
+// Required for per-route rate limiting
+builder.Services.AddMemoryCache();
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
 builder.Services.AddOcelot();
 // Add services to the container.
@@ -50,7 +55,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseOcelot().Wait();
+await app.UseOcelot();
 app.MapControllers();
 
 app.Run();
